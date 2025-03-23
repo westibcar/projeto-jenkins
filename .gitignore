@@ -13,3 +13,5 @@ terraform.lock.hcl
 
 # Ignorar arquivos de logs (caso existam)
 *.log
+
+.terraform.lock.hcl

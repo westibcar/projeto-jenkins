@@ -1,0 +1,39 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1508.v9cb_c3a_a_89dfd">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4080.va_15b_44a_91525">
+    <script>node {
+    stage (&apos;Checkout&apos;) {
+        // Faz o checkout do código da branch especificada (ou master/main)
+        git branch: &apos;main&apos;, url: &apos;https://github.com/westibcar/spring-petclinic&apos;
+    }
+    
+    stage (&apos;Compilar&apos;) {
+        // Executa o Maven para compilar o código
+        sh &apos;./mvnw compile&apos;
+    }
+
+    stage (&apos;Testar&apos;) {
+        // Executa os testes automatizados com Maven
+        sh &apos;./mvnw test&apos;
+    }
+
+    stage (&apos;Empacotar&apos;) {
+        // Empacota a aplicação Spring Boot como um JAR
+        sh &apos;./mvnw package&apos;
+    } 
+    
+    stage (&apos;Artefato&apos;) {
+        // Mostrando o ultimo artefato gerado
+        archiveArtifacts artifacts: &apos;target/*.jar&apos;
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
